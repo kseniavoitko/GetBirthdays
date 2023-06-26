@@ -22,10 +22,12 @@ def get_birthdays_per_week(employees: list) -> None:
         birthday = birthday.replace(year = current_year) if birthday.month != 1 else birthday.replace(year = current_year + 1)
         if 0 <= (birthday - current_datetime).days < 7:
             birthday_weekday = birthday.weekday()
-            if birthday_weekday in (5,6):
-                result[(0, 'Monday')].append(employee['name'])
+            if birthday_weekday == 5:
+                result[(birthday.replace(day = birthday.day + 2), 'Monday')].append(employee['name'])
+            elif birthday_weekday == 6:
+                result[(birthday.replace(day = birthday.day + 1), 'Monday')].append(employee['name'])
             else:
-                result[(birthday_weekday, birthday.strftime("%A"))].append(employee['name'])
+                result[(birthday, birthday.strftime("%A"))].append(employee['name'])
 
     result_keys = list(result.keys())
     result_keys.sort()
